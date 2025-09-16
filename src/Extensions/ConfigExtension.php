@@ -8,12 +8,12 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\TextareaField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\SSViewer;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
-class ConfigExtension extends DataExtension
+class ConfigExtension extends Extension
 {
     private static $force_robots_mode;
     private static $enable_custom_robots = true;
