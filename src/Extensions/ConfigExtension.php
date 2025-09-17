@@ -123,7 +123,7 @@ class ConfigExtension extends Extension
         return $fields;
     }
 
-    public function populateDefaults()
+    public function onAfterPopulateDefaults()
     {
         $this->getOwner()->RobotsMode = $this->getOwner()->getDefaultRobotsMode();
     }
