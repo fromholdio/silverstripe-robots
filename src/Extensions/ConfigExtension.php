@@ -71,7 +71,7 @@ class ConfigExtension extends Extension
         }
 
         $options = $this->getOwner()->getRobotsModeOptions();
-        if (!$options) {
+        if (empty($options)) {
             return;
         }
 
@@ -153,14 +153,14 @@ class ConfigExtension extends Extension
         }
     }
 
-    public function getDefaultRobotsMode()
+    public function getDefaultRobotsMode(): string
     {
         $mode = RobotsController::MODE_DISALLOW;
         $this->getOwner()->invokeWithExtensions('updateDefaultRobotsMode');
         return $mode;
     }
 
-    public function getIsCustomRobotsModeAllowed()
+    public function getIsCustomRobotsModeAllowed(): bool
     {
         $isAllowed = false;
         $options = $this->getOwner()->getRobotsModeOptions();
@@ -171,7 +171,7 @@ class ConfigExtension extends Extension
         return $isAllowed;
     }
 
-    public function getForcedRobotsMode()
+    public function getForcedRobotsMode(): ?string
     {
         $mode = null;
         $options = $this->getOwner()->getRobotsModeOptions();
@@ -189,7 +189,7 @@ class ConfigExtension extends Extension
         return $mode;
     }
 
-    public function getRobotsModeOptions()
+    public function getRobotsModeOptions(): array
     {
         $options = $this->getOwner()->config()->get('robots_mode_labels');
         foreach ($options as $key => $value) {
@@ -199,35 +199,35 @@ class ConfigExtension extends Extension
         }
         $this->getOwner()->invokeWithExtensions('updateRobotsModeOptions', $options);
         if (!$options || !is_array($options) || count($options) < 1) {
-            $options = null;
+            $options = [];
         }
         return $options;
     }
 
-    public function getRobotsTabPath()
+    public function getRobotsTabPath(): ?string
     {
         $path = $this->getOwner()->config()->get('robots_tab_path');
         $this->getOwner()->invokeWithExtensions('updateRobotsTabPath', $path);
         return $path;
     }
 
-    public function getRenderedContentAllow()
+    public function getRenderedContentAllow(): string
     {
         $oldThemes = SSViewer::get_themes();
         SSViewer::set_themes(SSViewer::config()->uninherited('themes'));
         $controller = RobotsController::create();
         $result = $controller->allow();
         SSViewer::set_themes($oldThemes);
-        return $result;
+		return (string) $result;
     }
 
-    public function getRenderedContentDisallow()
+    public function getRenderedContentDisallow(): string
     {
         $oldThemes = SSViewer::get_themes();
         SSViewer::set_themes(SSViewer::config()->uninherited('themes'));
         $controller = RobotsController::create();
         $result = $controller->disallow();
         SSViewer::set_themes($oldThemes);
-        return $result;
+        return (string) $result;
     }
 }
