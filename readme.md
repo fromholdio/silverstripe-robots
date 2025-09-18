@@ -11,9 +11,11 @@ This module supports single site as well as [multisites](https://github.com/symb
 
 ## Requirements
 
-* Silverstripe CMS 5.x
+* Silverstripe CMS 6.x
 
-Note: this version is compatible with SilverStripe 5. For SilverStripe 4, please see the [4 release line](https://github.com/xini/silverstripe-robots/tree/4).
+Note: this version is compatible with SilverStripe 6. 
+- For SilverStripe 5, please see the [5 release line](https://github.com/xini/silverstripe-robots/tree/4).
+- For SilverStripe 4, please see the [4 release line](https://github.com/xini/silverstripe-robots/tree/4).
 
 ## Installation
 
