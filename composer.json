@@ -8,13 +8,16 @@
 	"support": {
 		"issues": "https://github.com/xini/silverstripe-robots/issues"
 	},
-	"authors": [{
-		"name": "Florian Thoma",
-		"homepage": "https://innoweb.com.au"
-	},{
-		"name": "Luke Fromhold",
-		"homepage": "https://innoweb.com.au"
-	}],
+	"authors": [
+		{
+			"name": "Florian Thoma",
+			"homepage": "https://innoweb.com.au"
+		},
+		{
+			"name": "Luke Fromhold",
+			"homepage": "https://innoweb.com.au"
+		}
+	],
 	"require": {
 		"silverstripe/cms": "^6",
 		"unclecheese/display-logic": "^4"
