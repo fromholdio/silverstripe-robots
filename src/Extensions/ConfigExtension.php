@@ -8,12 +8,12 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\OptionsetField;
 use SilverStripe\Forms\TextareaField;
-use SilverStripe\ORM\DataExtension;
+use SilverStripe\Core\Extension;
 use SilverStripe\SiteConfig\SiteConfig;
 use SilverStripe\View\SSViewer;
 use UncleCheese\DisplayLogic\Forms\Wrapper;
 
-class ConfigExtension extends DataExtension
+class ConfigExtension extends Extension
 {
     private static $force_robots_mode;
     private static $enable_custom_robots = true;
@@ -71,7 +71,7 @@ class ConfigExtension extends DataExtension
         }
 
         $options = $this->getOwner()->getRobotsModeOptions();
-        if (!$options) {
+        if (empty($options)) {
             return;
         }
 
@@ -123,12 +123,12 @@ class ConfigExtension extends DataExtension
         return $fields;
     }
 
-    public function populateDefaults()
+    public function onAfterPopulateDefaults()
     {
         $this->getOwner()->RobotsMode = $this->getOwner()->getDefaultRobotsMode();
     }
 
-    public function requireDefaultRecords()
+    public function onRequireDefaultRecords()
     {
         // get correct config class
         if (class_exists('Symbiote\Multisites\Multisites')) {
@@ -153,14 +153,14 @@ class ConfigExtension extends DataExtension
         }
     }
 
-    public function getDefaultRobotsMode()
+    public function getDefaultRobotsMode(): string
     {
         $mode = RobotsController::MODE_DISALLOW;
         $this->getOwner()->invokeWithExtensions('updateDefaultRobotsMode');
         return $mode;
     }
 
-    public function getIsCustomRobotsModeAllowed()
+    public function getIsCustomRobotsModeAllowed(): bool
     {
         $isAllowed = false;
         $options = $this->getOwner()->getRobotsModeOptions();
@@ -171,7 +171,7 @@ class ConfigExtension extends DataExtension
         return $isAllowed;
     }
 
-    public function getForcedRobotsMode()
+    public function getForcedRobotsMode(): ?string
     {
         $mode = null;
         $options = $this->getOwner()->getRobotsModeOptions();
@@ -189,7 +189,7 @@ class ConfigExtension extends DataExtension
         return $mode;
     }
 
-    public function getRobotsModeOptions()
+    public function getRobotsModeOptions(): array
     {
         $options = $this->getOwner()->config()->get('robots_mode_labels');
         foreach ($options as $key => $value) {
@@ -199,35 +199,35 @@ class ConfigExtension extends DataExtension
         }
         $this->getOwner()->invokeWithExtensions('updateRobotsModeOptions', $options);
         if (!$options || !is_array($options) || count($options) < 1) {
-            $options = null;
+            $options = [];
         }
         return $options;
     }
 
-    public function getRobotsTabPath()
+    public function getRobotsTabPath(): ?string
     {
         $path = $this->getOwner()->config()->get('robots_tab_path');
         $this->getOwner()->invokeWithExtensions('updateRobotsTabPath', $path);
         return $path;
     }
 
-    public function getRenderedContentAllow()
+    public function getRenderedContentAllow(): string
     {
         $oldThemes = SSViewer::get_themes();
         SSViewer::set_themes(SSViewer::config()->uninherited('themes'));
         $controller = RobotsController::create();
         $result = $controller->allow();
         SSViewer::set_themes($oldThemes);
-        return $result;
+		return (string) $result;
     }
 
-    public function getRenderedContentDisallow()
+    public function getRenderedContentDisallow(): string
     {
         $oldThemes = SSViewer::get_themes();
         SSViewer::set_themes(SSViewer::config()->uninherited('themes'));
         $controller = RobotsController::create();
         $result = $controller->disallow();
         SSViewer::set_themes($oldThemes);
-        return $result;
+        return (string) $result;
     }
 }

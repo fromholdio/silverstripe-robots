@@ -1,5 +1,5 @@
-<% if $GoogleSitemapURL %>Sitemap: {$GoogleSitemapURL}<% end_if %>
-User-agent: *
+<% if $GoogleSitemapURL %>Sitemap: {$GoogleSitemapURL}
+<% end_if %>User-agent: *
 Disallow: /dev/
 Disallow: /admin/
 Disallow: /Security/<% if $DisallowedPages %><% loop $DisallowedPages %>

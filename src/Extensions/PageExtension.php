@@ -10,7 +10,7 @@ use Wilr\GoogleSitemaps\GoogleSitemap;
 
 class PageExtension extends Extension
 {
-    public function MetaComponents(array &$tags)
+    public function updateMetaComponents(array &$tags)
     {
         if ($this->getOwner()->config()->robots_enable_metatag == true) {
             $tags['robots'] = [
