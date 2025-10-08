@@ -120,6 +120,7 @@ class ConfigExtension extends Extension
             $disallowedOutputField->displayIf('RobotsMode')->isEqualTo(RobotsController::MODE_DISALLOW);
         }
 
+		$this->owner->invokeWithExtensions('updateRobotsCMSFields', $fields);
         return $fields;
     }
 
